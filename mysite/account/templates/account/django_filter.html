@@ -1,0 +1,111 @@
+{% extends "account/layout.html" %}
+{% block content %}
+
+<br><br><br>
+<div class="container">
+	<div class="col-md-12 column">
+
+<h4> <a href="https://www.cnblogs.com/xiaomage666/p/11317098.html"> Django内置过滤器总览-1 </a>
+<a href="https://blog.csdn.net/foryouslgme/article/details/52057445?utm_source=distribute.pc_relevant.none-task"> Django内置过滤器总览-2 </a></h4>
+
+mystr = {{mystr}} <br>
+now_date = {{now_date}} <br>
+int_list = {{int_list}}  <br>
+string = {{string}}  <br>
+mydict = {{mydict}}  <br>
+boolean = {{boolean}} <br>
+link = {{link}} <br>
+mylist = {{mylist}}  <br>
+<br>
+显示前 10个字：{ { mystr | truncatechars:10 }}截取字符串 --> {{ mystr | truncatechars:10 }} <br>
+{ { 123|add:"5" }} 加法  --> {{ 123|add:"5" }} <br>
+{ { 123|add:"-5" }} 减法  --> {{ 123|add:"-5" }} <br>
+
+{ { "ABCD"|lower }}：小写 --> {{ "ABCD"|lower }}<br/>
+{ { int_list|slice:":2" }}： 切片 --> {{ int_list|slice:":2" }}<br/>
+
+{ { mystr|upper }} ：大写 --> {{ mystr|upper }}<br/>
+{ { mystr|title }}： 首字母大写 --> {{mystr|title }}<br/>
+
+
+
+{ { 13.414121241|floatformat }} ：保留1位小数，可为负数 --> {{ 13.414121241|floatformat }} <br/>
+{ { 13.414121241|floatformat:"2" }}： 保留2位小数 --> {{ 13.414121241|floatformat:"2" }}： 保留2位小数<br/>
+{ { 23456 |get_digit:"2" }} ：从个位数开始截取指定位置的1个数字 --> {{ 23456 |get_digit:"2" }}<br/>
+{ { int_list|join:", " }} ：用指定分隔符连接列表 --> {{ int_list|join:", " }}<br/>
+{ { int_list|length }} ：返回列表个数 --> {{ int_list|length }}<br/>
+{ % if int_list|length_is:"3" %} ：列表个数是否指定数值<br/>
+
+{ % if 92|divisibleby:"2" %} ：判断是否整除指定数字<br/>
+
+{ { 21984124|filesizeformat }} ：以1024为基数，计算最大值，保留1位小数，增加可读性 --> {{ 21984124|filesizeformat }}<br/>
+{ { int_list|first }} ：返回列表第一个元素 --> {{ int_list|first }} <br/>
+
+{ { "AB'CD"|addslashes }}：单引号加上转义号，一般用于javascript中 --> {{"AB'CD"|addslashes}} <br>
+{ { mystr|capfirst }}： 第一个字母大写 --> {{mystr|capfirst }}<br>
+{ { mystr|center:"5" }}：输出指定长度的字符串，并把值对中 --> {{mystr|center:"5"}}<br>
+{ { "123spam456spam789"|cut:"spam" }}：查找删除指定字符串 --> {{"123spam456spam789"|cut:"spam"}}<br>
+
+<br>
+{ { now_date | date:"Y-m-d H:i:s" }} 时间格式化 --> {{now_date|date:"Y-m-d H:i:s"}}<br>
+{ { now_date | date:"F j, Y" }} 时间格式化 --> {{ now_date | date:"F j, Y" }}<br>
+{ { now_date | time:"P" }}： 日期的时间部分格式 --> {{ now_date | time:"P" }}<br/>
+
+<br>
+
+{ { link|urlize }}： 将URLs由纯文本变为可点击的链接。--> {{ link|urlize }}<br/>
+{ { link|urlizetrunc:"20" }}： 截取URLs字符串。--> {{ link|urlizetrunc:"20" }}<br/>
+
+{ { mark_safe_url}} mark_safe 可点击的链接 --> {{ mark_safe_url }} <br/>
+{ { link|safe }}：safe 将字符串标记为安全，不需要转义，不能链接。--> {{ link|safe }}<br/>
+{ { link }}：safe 显示URLs字符串，不能链接。--> {{ link }}<br/>
+<br>
+
+{ { "<a>1<a>1<a>1</a></a></a>22<a>1</a>"|truncatewords_html:"2" }}：截取指定个数的html标记，并补完整
+--> {{ "<a>1<a>1<a>1</a></a></a>22<a>1</a>"|truncatewords_html:"2" }}<br/>
+
+{ { value|default:"(N/A)" }}： 值不存在，使用指定值 --> {{ value|default:"(N/A)" }}<br/>
+{ { None|default_if_none:"(N/A)" }}： 值是None，使用指定值 --> {{ None|default_if_none:"(N/A)" }}<br/>
+{ { mydict|dictsort:'name' }} ：字典排序从小到大 --> {{ mydict|dictsort:'name' }}<br/>
+{ { mydict|dictsortreversed:'name' }} ：字典排序从大到小 --> {{ mydict|dictsortreversed:'name'}}<br/>
+
+{ { string|escape }} ：转换为html实体 --> {{ string|escape }}<br/>
+{ { "ik23hr&jqwh"|fix_ampersands }}： &转为&amp;<br/>
+{ { "ABCD"|linebreaks }}： 用新行用<p>  标记包裹 --> {{ "ABCD"|linebreaks }}<br/>
+{ { "ABCD"|linebreaksbr }}： 用新行用 标记包裹--> {{ "ABCD"|linebreaksbr }}<br/>
+{ { "ABCD"|linenumbers }}： 为变量中每一行加上行号 --> {{ "ABCD"|linenumbers }} <br/>
+{ { "abcd  xyz"|ljust:"50" }}： 把字符串在指定宽度中对左，其它用空格填充 --> {{ "abcd  xyz"|ljust:"50" }} <br/>
+
+{ % for i in "1abc1"|make_list %}ABCDE,{% endfor % }： 把字符串或数字的字符个数作为一个列表 --> 
+{% for i in "1abc1"|make_list %}ABCDE,{% endfor %}<br/>
+
+<hr>
+{ { "800-addo9485368"|phone2numeric }}： 将电话号码（可能包含字母）转换为其等效数字--> {{ "800-addo9485368"|phone2numeric }}<br/>
+{ { int_list|pluralize }}： 单词的复数形式，如列表字符串个数大于1，返回s，否则返回空串 --> {{ int_list|pluralize }}<br/>
+{ { mylist|pluralize:"es" }}： 指定es  --> {{ mylist|pluralize:"es" }}<br/>
+
+{ { mylist|pluralize:"y,ies" }}： 指定ies替换为y --> {{ mylist|pluralize:"y,ies" }}<br/>
+{ { mydict|pprint }}： 显示一个对象的值 --> {{ mydict|pprint }}<br/>
+{ { int_list|random }}： 返回列表的随机一项 --> {{ int_list|random }}<br/>
+{ { string|removetags:"br p div" }}： 删除字符串中指定html标记<br/>
+{ { string|rjust:"50" }}： 把字符串在指定宽度中对右，其它用空格填充 --> {{ string|rjust:"50" }}<br/>
+
+{ { string|slugify }}： 字符串中留下减号和下划线，其它符号删除，空格用减号替换 --> {{ string|slugify }}<br/>
+{ { 3|stringformat:"02i" }}： 字符串格式，使用Python的字符串格式语法 --> {{ 3|stringformat:"02i" }}<br/>
+
+
+{ { "E<A>A</A>B<C>C</C>D"|striptags }}： 剥去[X]HTML语法标记 --> {{ "E<A>A</A>B<C>C</C>D"|striptags }}<br/>
+
+
+{ { int_list|unordered_list }}： 多重嵌套列表展现为html的无序列表 --> <ul>{{ int_list|unordered_list }}</ul><br/>
+
+<a href="{ { link|urlencode } }">{{link}}</a>： 不能链接 --> <a href="{{ link|urlencode }}">{{link}}</a><br/>
+
+{ { "B C D E F"|wordcount }}：字符数 --> {{ "B C D E F"|wordcount }}<br/>
+{{ "a b c d e f g h i j k"|wordwrap:"5" }}： 每指定数量的字符就插入回车符<br/>
+{ { boolean|yesno:"Yes,No,Perhaps" }}：对三种值的返回字符串，对应是 非空,空,None --> {{ boolean|yesno:"Yes,No,Perhaps" }}<br/>
+
+	</div>
+</div>
+
+{% endblock %}

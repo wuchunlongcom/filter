@@ -1,0 +1,22 @@
+{% extends "account/layout.html" %}
+
+{% block content %}
+    <br><br><br>
+
+{% load test_filter %}
+
+{% with "<h1>HELLO OK</h1>" as tmpValue %}
+    <p>{{ tmpValue | mylower }}</p>
+    <hr>
+    <p>{{ tmpValue | add_no:"world" }}</p>
+    <hr>
+    <p>{{ tmpValue | add_yes:"world" }}</p>
+    <hr>
+    
+{% endwith %}
+
+
+
+{{ "all en ok" | cut_filter:"en" }}  <!-- :两边不能有空格 -->
+
+{% endblock %}
